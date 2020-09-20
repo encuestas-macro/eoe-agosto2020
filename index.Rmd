@@ -1,0 +1,188 @@
+---
+css: style_eoe.css
+pagetitle: "EOE agosto 2020"
+output: html_document
+---
+
+```{r config, include=FALSE}
+library(dplyr)
+library(dygraphs)
+library(kableExtra)
+library(formattable)
+knitr::opts_chunk$set(message = FALSE, warning = FALSE, echo = FALSE)
+load(here::here("data", "eoe", "eoe_ws"))
+sparkline::sparkline(0)
+```
+
+
+<!-- Header del documento -->
+<div class = "header">
+
+  <div class="imagen">
+  <img src="img/bcrd_squared.png" alt="drawing"/>
+  </div>
+  
+  <div class="title">
+  <h2>Banco Central de la República Dominicana<br>
+Encuesta de Opinión Empresarial</h2>
+<span>Agosto 2020</span>
+  </div>
+  
+</div>
+
+<hr class="head-ruler">
+
+<!-- ---------------------------------------------------------------------------------------------- -->
+
+### Situación económica positiva en el sector Industrial
+<div class = "first-container">
+<div class= "left">
+
+En agosto, el indicador sobre la situación económica del sector manufacturero registró un balance positivo por primera vez desde marzo, con un saldo de 10.5. Este resultado representa una recuperación de 22.1 puntos respecto a julio del 2020
+
+En cuanto al nivel de inventario, el sector se mantiene en una fase de desacumulación en la que ha marcado saldos notablemente inferiores al promedio histórico. En lo que va de año el promedio de este indicador ha sido -22.1, frente a un promedio de -3.1 en el período comprendido entre 2006-2019.
+</div>
+
+<div class = "right">
+#### Situación económica del mes actual
+```{r, fig.height=3, fig.width=5}
+dyg_sit_econ
+```
+</div>
+</div>
+
+<!-- ---------------------------------------------------------------------------------------------- -->
+
+### La producción del sector mantiene una tendencia positiva
+***
+<div class = "second-container">
+
+<div class= "left">
+
+El indicador que resume el nivel de producción mantiene la tendencia positiva iniciada en mayo, tras el mínimo histórico registrado en abril del presente año. En el levantamiento más reciente el saldo sobre el nivel de producción fue 21.1.
+
+Por el lado del empleo y los pedidos, ambos indicadores han mostrando un ligero deterioro después de marcar valores favorables en el mes de junio. Este mes los pedidos y el empleo marcaron saldos de -6.3 y -18.8, respectivamente.
+
+</div>
+
+<div class = "right">
+#### Producción y pedidos respecto al mes aterior
+```{r, fig.height=3, fig.width=5}
+dyg_produccion_pedidos_empleo
+```
+
+</div>
+</div>
+
+
+<!-- ---------------------------------------------------------------------------------------------- -->
+### Las expectativas de la situación económica del sector continúan optimistas
+***
+<div class = "third-container">
+<div class= "left first">
+
+El sector industrial se mantiene optimista en cuanto a las expectativas de sus principales variables. Así, el indicador que recoge las expectativas para la situación económica de los próximos seis meses muestra un saldo positivo por cuarto mes consecutivo, alcanzando un 63.2 en agosto, el resultado más alto en los últimos 12 meses.
+
+</div>
+
+<div class = "right first">
+#### Expectativas situación económica (próximos 6 meses) 
+```{r, fig.height=3, fig.width=5}
+dyg_exp_sit_econ
+```
+
+</div>
+
+<div class= "left secondl">
+De igual forma, las expectativas de producción y empleo siguen marcando saldos favorables. El saldo de opinión sobre la producción para los próximos 3 meses se coloca en 42.11.  De forma específica, solo un 10.5% de las empresas que respondieron a la encuesta considera que su producción se reduciría en los próximos meses. 
+
+Por su parte, el indicador sobre las expectativas de empleo se coloca en 5.3, con la mayor parte de las empresas considerando mantener constante su nivel de empleados en los próximos tres meses.
+
+</div>
+
+<div class= "right second">
+
+#### Expectativas de producción y empleo
+```{r, , fig.height=3, fig.width=5}
+dyg_exp_prod_empleo
+```
+
+</div>
+</div>
+
+<!-- ---------------------------------------------------------------------------------------------- -->
+### Confianza industrial y clima empresarial 
+***
+
+<div class = "fourth-container">
+<div class= "left first">
+
+El Índice de Confianza Industrial (ICI) resume la actividad actual y las expectativas de actividad futura de las empresas del sector manufacturero en base a variables observables de las empresas. Para agosto 2020, el indicador se coloca por encima de su nivel previo a la pandemia mostrando un saldo de 60.6. Este comportamiento viene guiado principalmente por la percepción favorable de la producción en los próximos tres meses y la evolución reciente del nivel de inventario.
+
+</div>
+
+<div class = "right first">
+#### Indicador de Confianza Industrial
+
+```{r, fig.height=3, fig.width=5}
+dyg_ici
+```
+
+</div>
+
+<div class = "left secondl">
+Asimismo, la percepción que tienen los empresarios del sector acerca de la situación económica actual y futura de sus empresas se sintetiza a través del Indicador de Clima Empresarial (ICE). Para este sondeo el indicador se coloca por encima de cero, mostrando un saldo de 35.4, para un considerable aumento respecto al registrado en el levantamiento de Julio. Con este resultado se alcanza el resultado más favorable desde febrero del 2020.
+</div>
+
+<div class = "right second">
+
+#### Indicador de Clima Empresarial
+```{r, fig.height=3, fig.width=5}
+dyg_ice
+```
+
+</div>
+
+</div>
+
+<!-- ---------------------------------------------------------------------------------------------- -->
+<div class="cuadro-resumen">
+### Cuadro resumen
+***
+
+```{r}
+# tabla_resumen %>% 
+#   mutate(
+#     Variación = formatter(
+#       "span", 
+#       style = x ~ style(
+#         font.weight = "bold",
+#         text.align = 'left',
+#         color = ifelse(x < 0, "red", "green")
+#         ), 
+#       x ~ icontext(ifelse(x < 0, "arrow-down", "arrow-up"), x)
+#     )(Variación)
+#   ) %>% kable(escape = FALSE, align = c("l", rep("r", 6))) %>% 
+#   kable_styling(bootstrap_options = c("striped", "hover", "condensed")) %>% 
+#   pack_rows("Mes actual", 1, 2) %>% 
+#   pack_rows("Retrospectiva", 3, 5) %>% 
+#   pack_rows("Expectativas", 6, 9) %>% 
+#   add_header_above(c(" ", "Porcentajes" = 3, "Saldos de opinión" = 3))
+
+tabla_draft
+```
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
